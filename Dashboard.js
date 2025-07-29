@@ -495,29 +495,46 @@ const Dashboard = () => {
     color = "blue",
     change,
     icon: Icon,
-  }) => (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-gray-600">{title}</h3>
-        <div
-          className={`w-10 h-10 bg-${color}-100 rounded-lg flex items-center justify-center`}>
-          {Icon && <Icon className={`w-5 h-5 text-${color}-600`} />}
+  }) => {
+    const getBackgroundColor = (color) => {
+      switch (color) {
+        case 'blue':
+          return 'bg-orange-50'; // #FFF2E9
+        case 'green':
+          return 'bg-purple-50'; // #EDE8FF
+        case 'purple':
+          return 'bg-sky-50'; // #EAF9FF
+        case 'orange':
+          return 'bg-rose-50'; // #FFEBEF
+        default:
+          return 'bg-white';
+      }
+    };
+
+    return (
+      <div className={`${getBackgroundColor(color)} rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow`}>
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium text-gray-600">{title}</h3>
+          <div
+            className={`w-10 h-10 bg-${color}-100 rounded-lg flex items-center justify-center`}>
+            {Icon && <Icon className={`w-5 h-5 text-${color}-600`} />}
+          </div>
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-3xl font-bold text-gray-900">{value}</p>
+            <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+          </div>
+          {change && (
+            <span className="text-sm text-green-600 flex items-center">
+              <TrendingUp className="w-4 h-4 mr-1" />
+              {change}
+            </span>
+          )}
         </div>
       </div>
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
-          <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
-        </div>
-        {change && (
-          <span className="text-sm text-green-600 flex items-center">
-            <TrendingUp className="w-4 h-4 mr-1" />
-            {change}
-          </span>
-        )}
-      </div>
-    </div>
-  );
+    );
+  };
 
   const FeaturePriorityCard = ({ feature, activity, priority, growth }) => {
     const priorityColors = {
